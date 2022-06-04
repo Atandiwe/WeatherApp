@@ -4,7 +4,7 @@ using System.Text;
 
 namespace WeatherApp
 {
-    internal class WeatherDatabase
+    internal class Weather
     {
         public class WeatherData
         {
@@ -29,7 +29,7 @@ namespace WeatherApp
                 public int humidity { get; set; }
             }
 
-            public class OpenWeatherDatabase
+            public class OpenWeatherData
             {
                 public Coord coord { get; set; }
                 public List<Weather> weather { get; set; }
