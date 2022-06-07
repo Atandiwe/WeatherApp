@@ -8,7 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
-using static WeatherApp.Weather.WeatherData;
+//using static WeatherApp.Weather;
+//using static WeatherApp.Weather.WeatherData;
+using static WeatherApp.WeatherData;
 
 namespace WeatherApp
 {
@@ -18,11 +20,25 @@ namespace WeatherApp
         {
             InitializeComponent();
         }
-      
-        async private Task<OpenWeatherData> GetWeatherData()
+        protected async override void OnAppearing()
         {
-            var loaction = await Geolocation.GetLocationAsync();
-            // loaction.Latitude = 
+               base.OnAppearing();
+            BindingContext = await GetWeather();
+
+        }
+
+      
+        async private Task<OpenWeatherData> GetWeather()
+        {
+            var details = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+            if (details != PermissionStatus.Granted)
+            {
+                var newdetail = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+            }
+            var location = await Geolocation.GetLocationAsync();
+            var latitude = location.Latitude;
+            var longitude = location.Longitude;
+
             var client = new HttpClient();
             client.DefaultRequestHeaders.Add("Accept", "application/json");
             var response = await client.GetStringAsync("https://api.openweathermap.org/data/2.5/weather?lat=35&lon=139&units=metric&appid=cd154b8d364ddbf23fb1135e0b44b6af");

@@ -4,8 +4,8 @@ using System.Text;
 
 namespace WeatherApp
 {
-    internal class Weather
-    {
+    
+    
         public class WeatherData
         {
             public class Clouds
@@ -71,5 +71,5 @@ namespace WeatherApp
             }
 
         }
-    }
+    
 }
