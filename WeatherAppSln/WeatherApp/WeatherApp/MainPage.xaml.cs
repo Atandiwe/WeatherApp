@@ -41,7 +41,7 @@ namespace WeatherApp
 
             var client = new HttpClient();
             client.DefaultRequestHeaders.Add("Accept", "application/json");
-            var response = await client.GetStringAsync("https://api.openweathermap.org/data/2.5/weather?lat=35&lon=139&units=metric&appid=cd154b8d364ddbf23fb1135e0b44b6af");
+            var response = await client.GetStringAsync("https://api.openweathermap.org/data/2.5/weather?lat=-33&lon=18&units=metric&appid=cd154b8d364ddbf23fb1135e0b44b6af");
             var weatherData = JsonConvert.DeserializeObject<OpenWeatherData>(response);
             return weatherData;
         }
