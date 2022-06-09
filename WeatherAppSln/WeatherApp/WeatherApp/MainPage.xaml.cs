@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 //using static WeatherApp.Weather;
@@ -16,14 +17,26 @@ namespace WeatherApp
 {
     public partial class MainPage : ContentPage
     {
+        //public bool IsRefreshing { get; set; }
+
+        //public ICommand RefreshCommand { get; set; }
+
+        public OpenWeatherData Weather { get; set; }
+
         public MainPage()
         {
             InitializeComponent();
+
+
+            //RefreshCommand = new Command(() =>
+            //{
+            //    IsRefreshing = false;
+            //});
         }
         protected async override void OnAppearing()
         {
-               base.OnAppearing();
-            BindingContext = await GetWeather();
+            base.OnAppearing();
+            this.BindingContext = await GetWeather();
 
         }
 
@@ -41,7 +54,8 @@ namespace WeatherApp
 
             var client = new HttpClient();
             client.DefaultRequestHeaders.Add("Accept", "application/json");
-            var response = await client.GetStringAsync("https://api.openweathermap.org/data/2.5/weather?lat=-33&lon=18&units=metric&appid=cd154b8d364ddbf23fb1135e0b44b6af");
+            string url = $"https://api.openweathermap.org/data/2.5/weather?lat={latitude}&lon={longitude}&units=metric&appid=cd154b8d364ddbf23fb1135e0b44b6af";
+            var response = await client.GetStringAsync(url);
             var weatherData = JsonConvert.DeserializeObject<OpenWeatherData>(response);
             return weatherData;
         }
